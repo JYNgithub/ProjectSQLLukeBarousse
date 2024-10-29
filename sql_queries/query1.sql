@@ -1,15 +1,15 @@
 -- What are the top-paying jobs for Data Engineers?
 -- 1) Identify the top 10 highest paying Data 
--- 2) Focus on jobs with specified salaries
+-- 2) Identify whether a requirement for a degree is specified
 -- 3) Objective: Highlight the best job opportunities for Data Engineers
 
 SELECT 
-    jp.job_id,
     jp.job_title,
-    jp.jOb_location,
     jp.salary_hour_avg,
     jp.job_posted_date,
-    cd.name company_name
+    jp.job_country,
+    cd.name company_name,
+    jp.job_no_degree_mention
 FROM 
     job_postings_fact jp
 LEFT JOIN
@@ -22,5 +22,9 @@ WHERE
 ORDER BY
     salary_hour_avg DESC
 LIMIT 10
+
+
+
+
 
 
