@@ -1,30 +1,18 @@
--- What are the top-paying jobs for Data Engineers?
--- Objective: Highlight the best job opportunities for Data Engineers
--- 1) Identify the top 10 highest paying Data 
--- 2) Identify whether a requirement for a degree is specified
+-- What is the typical hourly pay rate for a Data Engineer?
+-- Objective: Present the distibution of hourly pay rate of Data Engineers
+-- 1) Identify the hourly salary of Data Engineers
+-- 2) Identify the distribution and average hourly pay rate of Data Engineers
 
 SELECT 
-    jp.job_title,
-    jp.salary_hour_avg,
-    jp.job_posted_date,
-    jp.job_country,
     cd.name company_name,
-    jp.job_no_degree_mention
-FROM 
+    jp.salary_hour_avg
+FROM
     job_postings_fact jp
 LEFT JOIN
-    company_dim cd
-ON 
-    jp.company_id = cd.company_id
+    company_dim cd ON jp.company_id = cd.company_id
 WHERE
     job_title = 'Data Engineer'
     AND salary_hour_avg IS NOT NULL
-ORDER BY
-    salary_hour_avg DESC
-LIMIT 10;
-
-
-
 
 
 

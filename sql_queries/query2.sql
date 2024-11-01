@@ -1,42 +1,28 @@
--- What are the skills required for the top-paying Data Engineer roles?
--- Objective: Guides candidates to build the skills demanded for the top-paying roles
--- 1) Use the top 10 highest pay jobs data from the first query
--- 2) Identify the specific skills required for those jobs
-
-WITH top_10_pay AS (
-    SELECT 
-        jp.job_id,
-        jp.job_title,
-        jp.salary_hour_avg,
-        cd.name company_name
-    FROM 
-        job_postings_fact jp
-    LEFT JOIN
-        company_dim cd
-    ON 
-        jp.company_id = cd.company_id
-    WHERE
-        jp.job_title = 'Data Engineer'
-        AND jp.salary_hour_avg IS NOT NULL
-    ORDER BY
-        jp.salary_hour_avg DESC
-    LIMIT 10
-)
+-- What are the top-paying jobs available for Data Engineers?
+-- Objective: Highlight the best job opportunities for Data Engineers
+-- 1) Identify the top 10 highest paying Data 
+-- 2) Identify whether a requirement for a degree is specified
 
 SELECT 
-    sd.skills,
-    count(tp.job_id) demand_for_skill
+    jp.job_title,
+    jp.salary_hour_avg,
+    jp.job_posted_date,
+    jp.job_country,
+    cd.name company_name,
+    jp.job_no_degree_mention
 FROM 
-    top_10_pay tp
-INNER JOIN
-    skills_job_dim sj ON tp.job_id = sj.job_id
-INNER JOIN
-    skills_dim sd ON sj.skill_id = sd.skill_id
-GROUP BY
-    sd.skills
+    job_postings_fact jp
+LEFT JOIN
+    company_dim cd
+ON 
+    jp.company_id = cd.company_id
+WHERE
+    job_title = 'Data Engineer'
+    AND salary_hour_avg IS NOT NULL
 ORDER BY
-    demand_for_skill DESC
-LIMIT 20;
+    salary_hour_avg DESC
+LIMIT 10;
+
 
 
 

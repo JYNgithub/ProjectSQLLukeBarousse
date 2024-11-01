@@ -1,11 +1,11 @@
--- What are the top skill types based on salary for Data Engineers?
--- Objective: Identify the most financially rewarding skill types to acquire or improve
--- 1) Identify the average salary associated with each skill type
--- 2) Identify the top 10 most financially rewarding skill types
+--  What are the most in-demand skills for Data Engineers?
+-- Objective: Identify the top 10 skills needed to get a job as a Data Engineer, regardless of salary 
+-- 1) Focus on all job postings for Data Engineers
+-- 2) Identify the top 10 most demanded skills 
 
 SELECT
-    sd.type,
-    ROUND(AVG(jp.salary_hour_avg), 2) average_hourly_salary
+    sd.skills,
+    COUNT(jp.job_id) demand_for_skill
 FROM    
     job_postings_fact jp
 INNER JOIN
@@ -14,9 +14,11 @@ INNER JOIN
     skills_dim sd ON sj.skill_id = sd.skill_id
 WHERE 
     jp.job_title = 'Data Engineer'
-    AND jp.salary_hour_avg IS NOT NULL
 GROUP BY
-    sd.type
+    sd.skills
 ORDER BY
-    average_hourly_salary DESC
+    demand_for_skill DESC
 LIMIT 10;
+
+
+
